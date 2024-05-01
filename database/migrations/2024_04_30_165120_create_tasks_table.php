@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('assigned_user_id')->constrained('users');
             $table->foreignId('project_id')->constrained('projects');
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
