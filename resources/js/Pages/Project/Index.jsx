@@ -14,7 +14,7 @@ export default function Index({auth, projects, queryParams = null, success}) {
             delete queryParams[name];
         }
 
-        router.get(route("project.index"), queryParams);
+        router.get(route("projects.index"), queryParams);
     };
 
     const onKeyPress = (name, e) => {
@@ -34,14 +34,14 @@ export default function Index({auth, projects, queryParams = null, success}) {
             queryParams.sort_field = name;
             queryParams.sort_direction = "asc";
         }
-        router.get(route("project.index"), queryParams);
+        router.get(route("projects.index"), queryParams);
     };
 
     const deleteProject = (project) => {
         if (!window.confirm("Are you sure you want to delete the project?")) {
             return;
         }
-        router.delete(route("project.destroy", project.id));
+        router.delete(route("projects.destroy", project.id));
     };
 
     return (
@@ -78,14 +78,14 @@ export default function Index({auth, projects, queryParams = null, success}) {
                                     <thead
                                         className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                                     <tr className="text-nowrap">
-                                        {/*<TableHeading*/}
-                                        {/*    name="id"*/}
-                                        {/*    sort_field={queryParams.sort_field}*/}
-                                        {/*    sort_direction={queryParams.sort_direction}*/}
-                                        {/*    sortChanged={sortChanged}*/}
-                                        {/*>*/}
-                                        {/*    ID*/}
-                                        {/*</TableHeading>*/}
+                                        <TableHeading
+                                            name="id"
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={queryParams.sort_direction}
+                                            sortChanged={sortChanged}
+                                        >
+                                            ID
+                                        </TableHeading>
                                         <th className="px-3 py-3">Image</th>
                                         <TableHeading
                                             name="name"
