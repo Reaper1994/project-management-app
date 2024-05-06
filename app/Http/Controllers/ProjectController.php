@@ -8,7 +8,9 @@ use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -99,7 +101,7 @@ class ProjectController extends Controller
         }
         $project->update($data);
 
-        return to_route('project.index')
+        return to_route('projects.index')
             ->with('success', "Project \"$project->name\" was updated");
     }
 
@@ -118,7 +120,7 @@ class ProjectController extends Controller
         }
         Project::create($data);
 
-        return to_route('project.index')
+        return to_route('projects.index')
             ->with('success', 'Project was created');
     }
 
@@ -127,6 +129,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
+
         return inertia("Project/Create");
     }
 
@@ -140,7 +143,7 @@ class ProjectController extends Controller
         if ($project->image_path) {
             Storage::disk('public')->deleteDirectory(dirname($project->image_path));
         }
-        return to_route('project.index')
+        return to_route('projects.index')
             ->with('success', "Project \"$name\" was deleted");
     }
 }
