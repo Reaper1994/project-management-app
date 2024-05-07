@@ -19,7 +19,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function index(Project $project)
     {
         $query = $project->tasks();
 
@@ -59,8 +59,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        dd(auth()->id());
-        Log::info('User ID:', auth()->id());
+
         $data = $request->validated();
         $image = $data['image'] ?? null;
         $data['updated_by'] = Auth::id();
