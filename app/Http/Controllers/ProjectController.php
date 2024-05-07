@@ -11,41 +11,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Log;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-        $q = Project::query();
-
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", "desc");
-
-        if (request("name")) {
-            $q->where("name", "like", "%" . request("name") . "%");
-        }
-        if (request("status")) {
-            $q->where("status", request("status"));
-        }
-
-        $projects = $q->orderBy($sortField, $sortDirection)
-            ->paginate(10)
-            ->onEachSide(1);
-
-        return inertia("Project/Index", [
-            "projects" => ProjectResource::collection($projects),
-            'queryParams' => request()->query() ?: null,
-            'success' => session('success'),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
 
     /**
      * Display the specified resource.
@@ -90,6 +59,8 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        dd(auth()->id());
+        Log::info('User ID:', auth()->id());
         $data = $request->validated();
         $image = $data['image'] ?? null;
         $data['updated_by'] = Auth::id();
