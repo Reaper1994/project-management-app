@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
-use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +20,7 @@ class ProjectController extends Controller
      */
     public function index(Project $project)
     {
-        $query = $project->tasks();
+        $query = Project::query();
 
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", "desc");
@@ -33,12 +32,12 @@ class ProjectController extends Controller
             $query->where("status", request("status"));
         }
 
-        $tasks = $query->orderBy($sortField, $sortDirection)
+        $projects = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
-        return inertia('Project/Show', [
-            'project' => new ProjectResource($project),
-            "tasks" => TaskResource::collection($tasks),
+
+        return inertia("Project/Index", [
+            "projects" => ProjectResource::collection($projects),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
