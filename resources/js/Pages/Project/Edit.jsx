@@ -16,11 +16,11 @@ export default function Create({auth, project}) {
         _method: "PUT",
     });
 
-    
+
     const onSubmit = (e) => {
         e.preventDefault();
 
-        post(route("projects.update", project.data.id));
+        post(route("projects.update", project.id));
     };
 
     return (
@@ -29,7 +29,7 @@ export default function Create({auth, project}) {
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Edit project "{project.data.name}"
+                        Edit project "{project.name}"
                     </h2>
                 </div>
             }
@@ -45,7 +45,7 @@ export default function Create({auth, project}) {
                         >
                             {project.image_path && (
                                 <div className="mb-4">
-                                    <img src={project.data.image_path} className="w-64"/>
+                                    <img src={project.image_path} className="w-64"/>
                                 </div>
                             )}
                             <div>
