@@ -61,7 +61,7 @@ export default function Create({auth, task, projects, users}) {
                                     onChange={(e) => setData("project_id", e.target.value)}
                                 >
                                     <option value="">Select Project</option>
-                                    {projects.data.map((project) => (
+                                    {projects.map((project) => (
                                         <option value={project.id} key={project.id}>
                                             {project.name}
                                         </option>
@@ -178,7 +178,7 @@ export default function Create({auth, task, projects, users}) {
                                     onChange={(e) => setData("assigned_user_id", e.target.value)}
                                 >
                                     <option value="">Select User</option>
-                                    {users.data.map((user) => (
+                                    {users.map((user) => (
                                         <option value={user.id} key={user.id}>
                                             {user.name}
                                         </option>
