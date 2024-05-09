@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::redirect('/', 'Dashboard');
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', Treblle\Middlewares\TreblleMiddleware::class])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
     Route::resource('tasks', TaskController::class);
     Route::resource('projects', ProjectController::class);
