@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
@@ -18,10 +19,10 @@ Route::get('/', function () {
 });
 
 Route::redirect('/', 'Dashboard');
+//, Treblle\Middlewares\TreblleMiddleware::class
 
-
-Route::middleware(['auth', Treblle\Middlewares\TreblleMiddleware::class])->group(function () {
-    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('tasks', TaskController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('users', UserController::class);
