@@ -93,7 +93,7 @@ class TaskController extends Controller
         }
         $task->update($data);
 
-        return to_route('task.index')
+        return to_route('tasks.index')
             ->with('success', "Task \"$task->name\" was updated");
     }
 
@@ -112,7 +112,7 @@ class TaskController extends Controller
         }
         Task::create($data);
 
-        return to_route('task.index')
+        return to_route('tasks.index')
             ->with('success', 'Task was created');
     }
 
@@ -140,7 +140,7 @@ class TaskController extends Controller
         if ($task->image_path) {
             Storage::disk('public')->deleteDirectory(dirname($task->image_path));
         }
-        return to_route('task.index')
+        return to_route('tasks.index')
             ->with('success', "Task \"$name\" was deleted");
     }
 
