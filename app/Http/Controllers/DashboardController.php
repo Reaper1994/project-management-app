@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+//        dd('hi');
         $user = auth()->user();
         $totalPendingTasks = Task::query()
             ->where('status', 'pending')
@@ -42,6 +43,7 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
         $activeTasks = TaskResource::collection($activeTasks);
+
         return inertia(
             'Dashboard',
             compact(

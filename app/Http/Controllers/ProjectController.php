@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Log;
+
 
 class ProjectController extends Controller
 {
+
+    private $sortField, $sortDirection;
+
+    public function __construct()
+    {
+        $this->sortField = request("sort_field", 'created_at');
+        $this->sortDirection = request("sort_direction", 'desc');
+    }
 
     /**
      * Display the specified resource.
@@ -22,8 +31,8 @@ class ProjectController extends Controller
     {
         $query = Project::query();
 
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", "desc");
+        $sortField = $this->sortField;
+        $sortDirection = $this->sortDirection;
 
         if (request("name")) {
             $query->where("name", "like", "%" . request("name") . "%");
@@ -38,6 +47,35 @@ class ProjectController extends Controller
 
         return inertia("Project/Index", [
             "projects" => ProjectResource::collection($projects),
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
+        ]);
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Project $project)
+    {
+        $query = $project->tasks();
+
+        $sortField = $this->sortField;
+        $sortDirection = $this->sortDirection;
+
+        if (request("name")) {
+            $query->where("name", "like", "%" . request("name") . "%");
+        }
+        if (request("status")) {
+            $query->where("status", request("status"));
+        }
+
+        $tasks = $query->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+        return inertia('Project/Show', [
+            'project' => new ProjectResource($project),
+            "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
