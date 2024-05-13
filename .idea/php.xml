@@ -5,6 +5,10 @@
       <LaravelPintConfiguration tool_path="$PROJECT_DIR$/vendor/bin/pint" />
     </laravel_pint_settings>
   </component>
+  <component name="LaravelPintOptionsConfiguration">
+    <option name="reformatOnlyUncommittedFiles" value="true" />
+    <option name="ruleset" value="defined in pint.json" />
+  </component>
   <component name="MessDetectorOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>
