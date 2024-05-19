@@ -9,8 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
-        //        dd('hi');
+        
         $user = auth()->user();
         $totalPendingTasks = Task::query()
             ->where('status', 'pending')
