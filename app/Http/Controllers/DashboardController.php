@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index()
+    /**
+     * Function lists all the tasks.
+     *
+     * @return Response
+     */
+    public function index(): Response
     {
-        
+
         $user = auth()->user();
         $totalPendingTasks = Task::query()
             ->where('status', 'pending')
