@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Response;
 
 
 class ProjectController extends Controller
@@ -26,8 +27,12 @@ class ProjectController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param Project $project
+     *
+     * @return Response
      */
-    public function index(Project $project)
+    public function index(Project $project): Response
     {
         $query = Project::query();
 
@@ -55,6 +60,10 @@ class ProjectController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param Project $project
+     *
+     * @return Response
      */
     public function show(Project $project)
     {
@@ -73,6 +82,7 @@ class ProjectController extends Controller
         $tasks = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
+
         return inertia('Project/Show', [
             'project' => new ProjectResource($project),
             "tasks" => TaskResource::collection($tasks),
@@ -83,8 +93,10 @@ class ProjectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param Project $project
      */
-    public function edit(Project $project)
+    public function edit(Project $project): Response
     {
         return inertia('Project/Edit', [
             'project' => $project,
@@ -93,6 +105,8 @@ class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param UpdateProjectRequest $request
+     * @param Project $project
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {

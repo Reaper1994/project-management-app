@@ -26,6 +26,8 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
+     *
+     * @return RedirectResponse
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -42,6 +44,10 @@ class ProfileController extends Controller
 
     /**
      * Delete the user's account.
+     *
+     * @param Request
+     *
+     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {
