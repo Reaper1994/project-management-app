@@ -1,11 +1,16 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
-import {Head, Link, router} from "@inertiajs/react";
+import {Head, Link, router, usePage} from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import Pagination from "@/Components/Pagnation.jsx";
+import {dropdownOption} from "@/Components/Select.jsx";
 
-export default function Index({auth, projects, queryParams = null, success}) {
+export default function Index({auth, projects, queryParams = {}, success}) {
+
+    const {statuses} = usePage().props;
+    const statusOptions = dropdownOption(statuses.status);
+
     queryParams = queryParams || {};
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -97,6 +102,7 @@ export default function Index({auth, projects, queryParams = null, success}) {
                                         </TableHeading>
 
                                         <TableHeading
+                                            class="w-64"
                                             name="status"
                                             sort_field={queryParams.sort_field}
                                             sort_direction={queryParams.sort_direction}
@@ -151,9 +157,11 @@ export default function Index({auth, projects, queryParams = null, success}) {
                                                 }
                                             >
                                                 <option value="">Select Status</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="in_progress">In Progress</option>
-                                                <option value="completed">Completed</option>
+                                                {statusOptions.map((option) => (
+                                                    <option key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </option>
+                                                ))}
                                             </SelectInput>
                                         </th>
                                         <th className="px-3 py-3"></th>
@@ -178,7 +186,7 @@ export default function Index({auth, projects, queryParams = null, success}) {
                                                 {/*</Link>*/}
                                             </th>
                                             <td className="px-3 py-2">
-
+                                                {project.status}
                                             </td>
                                             <td className="px-3 py-2 text-nowrap">
                                                 {project.created_at}
