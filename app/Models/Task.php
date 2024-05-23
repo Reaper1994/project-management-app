@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\StatusEnum;
+use App\TaskPriorityEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +22,19 @@ class Task extends Model
         'created_by',
         'updated_by',
         'project_id',
+    ];
+
+    protected $casts = [
+        'due_date' => 'datetime',
+        'assigned_user_id' => 'integer',
+        'name' => 'string',
+        'description' => 'string',
+        'image_path' => 'string',
+        'status' => StatusEnum::class,
+        'priority' => TaskPriorityEnum::class,
+        'created_by' => 'datetime',
+        'updated_by' => 'datetime',
+        'project_id' => 'integer',
     ];
 
     public function project()
