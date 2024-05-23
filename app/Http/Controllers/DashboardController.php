@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use App\StatusEnum;
 use Inertia\Response;
 
 class DashboardController extends Controller
@@ -18,33 +19,33 @@ class DashboardController extends Controller
 
         $user = auth()->user();
         $totalPendingTasks = Task::query()
-            ->where('status', 'pending')
+            ->where('status', StatusEnum::PENDING)
             ->count();
         $myPendingTasks = Task::query()
-            ->where('status', 'pending')
+            ->where('status', StatusEnum::PENDING)
             ->where('assigned_user_id', $user->id)
             ->count();
 
 
         $totalProgressTasks = Task::query()
-            ->where('status', 'in_progress')
+            ->where('status', StatusEnum::IN_PROGRESS)
             ->count();
         $myProgressTasks = Task::query()
-            ->where('status', 'in_progress')
+            ->where('status', StatusEnum::IN_PROGRESS)
             ->where('assigned_user_id', $user->id)
             ->count();
 
 
         $totalCompletedTasks = Task::query()
-            ->where('status', 'completed')
+            ->where('status', StatusEnum::COMPLETED)
             ->count();
         $myCompletedTasks = Task::query()
-            ->where('status', 'completed')
+            ->where('status', StatusEnum::COMPLETED)
             ->where('assigned_user_id', $user->id)
             ->count();
 
         $activeTasks = Task::query()
-            ->whereIn('status', ['pending', 'in_progress'])
+            ->whereIn('status', [StatusEnum::PENDING, StatusEnum::IN_PROGRESS])
             ->where('assigned_user_id', $user->id)
             ->limit(10)
             ->get();
