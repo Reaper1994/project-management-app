@@ -4,7 +4,8 @@ import SelectInput from "@/Components/SelectInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {Head, Link, useForm} from "@inertiajs/react";
+import {Head, Link, useForm, usePage} from "@inertiajs/react";
+import {dropdownOption} from "@/Components/Select.jsx";
 
 export default function Create({auth}) {
     const {data, setData, post, errors, reset} = useForm({
@@ -20,6 +21,9 @@ export default function Create({auth}) {
 
         post(route("projects.store"));
     };
+
+    const {statuses} = usePage().props;
+    const statusOptions = dropdownOption(statuses.status);
 
     return (
         <AuthenticatedLayout
@@ -112,10 +116,13 @@ export default function Create({auth}) {
                                     className="mt-1 block w-full"
                                     onChange={(e) => setData("status", e.target.value)}
                                 >
+
                                     <option value="">Select Status</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="in_progress">In Progress</option>
-                                    <option value="completed">Completed</option>
+                                    {statusOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
                                 </SelectInput>
 
                                 <InputError message={errors.project_status} className="mt-2"/>

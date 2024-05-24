@@ -156,7 +156,7 @@ export default function Index({auth, projects, queryParams = {}, success}) {
                                                     searchFieldChanged("status", e.target.value)
                                                 }
                                             >
-                                                <option value="">Select Status</option>
+                                                <option value="">Status</option>
                                                 {statusOptions.map((option) => (
                                                     <option key={option.value} value={option.value}>
                                                         {option.label}

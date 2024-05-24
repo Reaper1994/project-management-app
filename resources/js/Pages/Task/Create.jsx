@@ -4,16 +4,21 @@ import SelectInput from "@/Components/SelectInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {Head, Link, useForm} from "@inertiajs/react";
+import {Head, Link, useForm, usePage} from "@inertiajs/react";
+import {dropdownOption} from "@/Components/Select.jsx";
 
 export default function Create({auth, projects, users}) {
-    const {data, setData, post, errors, reset} = useForm({
+    const {data, setData, post, errors} = useForm({
         image: "",
         name: "",
         status: "",
         description: "",
         due_date: "",
     });
+
+    const {statuses} = usePage().props;
+    const statusOptions = dropdownOption(statuses.status);
+    const taskPriorityStatusOptions = dropdownOption(statuses.task_priority_status);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -125,10 +130,12 @@ export default function Create({auth, projects, users}) {
                                     className="mt-1 block w-full"
                                     onChange={(e) => setData("status", e.target.value)}
                                 >
-                                    <option value="">Select Status</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="in_progress">In Progress</option>
-                                    <option value="completed">Completed</option>
+                                    <option value="">Status</option>
+                                    {statusOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
                                 </SelectInput>
 
                                 <InputError message={errors.task_status} className="mt-2"/>
@@ -144,9 +151,11 @@ export default function Create({auth, projects, users}) {
                                     onChange={(e) => setData("priority", e.target.value)}
                                 >
                                     <option value="">Select Priority</option>
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
+                                    {taskPriorityStatusOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
                                 </SelectInput>
 
                                 <InputError message={errors.priority} className="mt-2"/>
@@ -165,7 +174,7 @@ export default function Create({auth, projects, users}) {
                                     onChange={(e) => setData("assigned_user_id", e.target.value)}
                                 >
                                     <option value="">Select User</option>
-                                    {users.data.map((user) => (
+                                    {users.map((user) => (
                                         <option value={user.id} key={user.id}>
                                             {user.name}
                                         </option>

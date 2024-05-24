@@ -8,6 +8,7 @@ import {
 } from "@/Constants.jsx";
 
 export default function Show({auth, task}) {
+
     return (
         <AuthenticatedLayout
             user={auth.user}
