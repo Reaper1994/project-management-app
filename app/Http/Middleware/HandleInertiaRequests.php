@@ -43,7 +43,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'statuses' => [
                 'status' => StatusEnum::cases(),
-                'TaskPriorityStatus' => TaskPriorityEnum::cases(),
+                'task_priority_status' => TaskPriorityEnum::cases(),
             ]
         ];
     }
