@@ -122,6 +122,7 @@ export default function Create({auth, project}) {
                                     id="project_status"
                                     className="mt-1 block w-full"
                                     onChange={(e) => setData("status", e.target.value)}
+                                    value={data.status}
                                 >
                                     <option value="">Select Status</option>
                                     {statusOptions.map((option) => (

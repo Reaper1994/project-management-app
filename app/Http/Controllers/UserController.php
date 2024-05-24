@@ -47,8 +47,7 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
         User::create($data);
 
-        return to_route('user.index')
-            ->with('success', 'User was created');
+        return inertia("User/Index", ['success', 'User was created']);
     }
 
     /**
@@ -91,7 +90,7 @@ class UserController extends Controller
         }
         $user->update($data);
 
-        return to_route('user.index')
+        return to_route('users.index')
             ->with('success', "User \"$user->name\" was updated");
     }
 
@@ -102,7 +101,7 @@ class UserController extends Controller
     {
         $name = $user->name;
         $user->delete();
-        return to_route('user.index')
+        return to_route('users.index')
             ->with('success', "User \"$name\" was deleted");
     }
 }

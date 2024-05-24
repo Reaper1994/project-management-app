@@ -137,9 +137,12 @@ export default function Create({auth, task, projects, users}) {
                                     onChange={(e) => setData("status", e.target.value)}
                                 >
                                     <option value="">Select Status</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="in_progress">In Progress</option>
-                                    <option value="completed">Completed</option>
+                                    <option value="">Select Status</option>
+                                    {statusOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
                                 </SelectInput>
 
                                 <InputError message={errors.task_status} className="mt-2"/>
