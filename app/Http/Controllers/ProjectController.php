@@ -98,8 +98,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project): Response
     {
+
         return inertia('Project/Edit', [
-            'project' => $project,
+            'project' => new ProjectResource($project),
         ]);
     }
 
