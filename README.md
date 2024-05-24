@@ -13,7 +13,6 @@ MySQL or any other supported database Steps Clone the repository:
 
  Create a copy of the .env  In the .env file update the db credentials
 
-
 ## Run migrations and seeders:
 
-php artisan migrate: fresh --seed
+`php artisan migrate: fresh --seed`
