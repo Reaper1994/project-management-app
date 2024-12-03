@@ -1,4 +1,5 @@
 
+
 # Project Management App
 A Laravel app to track and manage projects, built with  Inertia.js and React.
 Features include CRUD operations for creating projects, assigning them to users, and managing tasks (create, read, update, delete).
